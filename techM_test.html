@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test</title>
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<style>
+*, body {
+  margin: 0;
+  padding: 0;
+  font-family: arial;
+}
+.container {
+  border: 5px solid #138FCD;
+  margin: 15px auto;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  border-bottom: 0.5px solid #CBCBCB;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  padding: 5px 10px;
+  line-height: 20px;
+}
+.row-inner{
+	margin: 0% 2%;
+    width: 96%;
+}
+.row-inner .column{
+	padding: 5px 0px;
+}
+.text-right{
+	text-align: right;
+}
+.text-center{
+	text-align: center;
+}
+.fntBld{
+	font-weight: bold;
+    font-size: 15px;
+}
+.topLft{
+	background-color: #F7F7F7;
+	color: #454545;
+}
+.topRht{
+	background-color: #EFEFEF;
+	text-align: right;
+}
+.topRht .top{
+	color: #646464;
+}
+.topRht .top span{
+	color: #138FCD;
+	font-size: 20px;
+}
+.topRht .btm{
+	color: #908f8f;
+}
+.col-acctNum{
+	color: #138FCD;
+	font-weight: bold;
+	line-height: 50px;
+}
+.col-acctNum a{
+	color: #138FCD;
+	font-weight: bold;
+	text-decoration: none;
+}
+.col-loss{
+	color: #ea1d22;
+}
+.col-profit{
+	color: #23b951;
+}
+.column.text-right{
+	line-height: 25px;
+}
+.bdr-hdr{
+	border-bottom: 2px solid #CBCBCB;
+}
+.bdr-none{
+	border-bottom: none;
+}
+
+@media only screen and (max-width: 600px) {
+	.container {
+	  width: 100%;
+	}
+}
+@media only screen and (min-width: 600px) {
+  .container {
+	  width: 30%;
+	}
+}
+</style>
+</head>
+
+<body>
+<div class='container'>
+  <div class='row bdr-hdr'>
+    <div class='column topLft'>
+      <div class='top'>&nbsp;</div>
+	  <div class='btm'>Account</div>
+    </div>
+    <div class='column topRht fntBld'>
+      <div class='top'><span>&#9652;</span> Available Cash</div>
+	  <div class='btm'>Today's Change</div>
+    </div>
+  </div>
+  
+  <div class='row row-inner'>
+    <div class='column col-acctNum'>
+      <div>IRA - 5200</div>
+    </div>
+    <div class='column text-right fntBld'>
+      <div class='col-price'>$5,763.36</div>
+	  <div class='col-loss'>-0.08% / $8,916.69</div>
+    </div>
+  </div>
+  
+  <div class='row row-inner'>
+    <div class='column col-acctNum'>
+      <div>AAA - 1812</div>
+    </div>
+    <div class='column text-right fntBld'>
+      <div class='col-price'>$2,010,926.10</div>
+	  <div class='col-profit'>+0.21% / $38,881.63</div>
+    </div>
+  </div>
+  
+  <div class='row row-inner'>
+    <div class='column col-acctNum'>
+      <div>AAA - 3810</div>
+    </div>
+    <div class='column text-right fntBld'>
+      <div class='col-price'>$10,050,054.07</div>
+	  <div class='col-profit'>+0.07% / $8,916.69</div>
+    </div>
+  </div>
+  
+  <!------------------ Show more datas --------------------------->
+  <div class='row row-inner disp_none'>
+    <div class='column col-acctNum'>
+      <div>IRA - 6500</div>
+    </div>
+    <div class='column text-right fntBld'>
+      <div class='col-price'>$8,803.36</div>
+	  <div class='col-loss'>-0.09% / $9,928.69</div>
+    </div>
+  </div>
+  
+  <div class='row row-inner disp_none'>
+    <div class='column col-acctNum'>
+      <div>AAA - 1900</div>
+    </div>
+    <div class='column text-right fntBld'>
+      <div class='col-price'>$3,200,926.10</div>
+	  <div class='col-profit'>+0.26% / $40,000.63</div>
+    </div>
+  </div>
+  
+  <div class='row row-inner bdr-none'>
+    <div class='column col-acctNum text-center'>
+      <div><a href="javascript:void(0);" id="loadMore">Load more</a></div>
+    </div>
+  </div>
+  
+</div>
+
+<script type="text/javascript">
+	// on load hiding the last two rows 
+	window.onload = function(){
+		var x = document.getElementsByClassName("disp_none");
+		for (let i = 0; i < x.length; i++) {
+			x[i].style.display = 'none';
+		}
+	}
+	
+	document.getElementById("loadMore").addEventListener("click", loadMore);
+	
+	// Showing last two rows static content are not from api
+	function loadMore(){
+		var x = document.getElementsByClassName("disp_none");
+		for (let i = 0; i < x.length; i++) {
+			x[i].style.display = 'flex';
+		}
+	}
+
+	const acctData = [
+		{
+			"acctNum": "AAA - 1234",
+			"user": "Alice"
+		},
+		{
+			"acctNum": "AAA - 5231",
+			"user": "Bob"
+		},
+		{
+			"acctNum": "AAA - 9921",
+			"user": "Alice"
+		},
+		{
+			"acctNum": "AAA - 8191",
+			"user": "Alice"
+		}
+	]
+
+	const balance = {
+		"AAA - 1234": 4593.22,
+		"AAA - 9921": 0,
+		"AAA - 5231": 232142.5,
+		"AAA - 8191": 4344
+	}
+	
+	// filter user from acctData list
+	const filterByUser = (arr, user) => arr.filter(el => el.user.toLowerCase() === user.toLowerCase());
+
+	const compareByAcctNum = (a, b) => {
+	  const accountA = a.acctNum.toUpperCase();
+	  const accountB = b.acctNum.toUpperCase();
+	  
+	  let output = 0
+	  if (accountA < accountB) { output = -1; }
+	  if (accountA > accountB) { output = 1; }
+	  return output;
+	}
+
+	const compareByAmount = (a, b) => {
+	  const amountA = balance[a];
+	  const amountB = balance[b];
+	  return amountA - amountB;
+	}
+
+	const filteredByBob = filterByUser(acctData, 'Bob');
+	const filteredByCharlie = filterByUser(acctData, 'Charlie');
+	const filteredByAlice = filterByUser(acctData, 'Alice');
+
+	// sorting with acctNum
+	const sortedByAcctNum = acctData.slice(0).sort(compareByAcctNum);
+
+	// get all alice acctNum
+	const aliceAcctNames = filteredByAlice.slice(0).map(account => account.acctNum);
+	const numberKeysSortedByAmount = Object.keys(balance).sort(compareByAmount)
+	const filteredByAliceSortedByBalance = [];
+
+	numberKeysSortedByAmount.forEach(numKey => {
+	  if(aliceAcctNames.includes(numKey)) {
+		const accountObj = acctData.filter(el => el.acctNum.toLowerCase() === numKey.toLowerCase());
+		// Alice acctNum array in ascending
+		filteredByAliceSortedByBalance.push(accountObj)
+	  }
+	})
+
+	console.log('filtered by Bob: ', filteredByBob);
+	console.log('filtered by Charlie: ', filteredByCharlie);
+	console.log('sorted by acctNum: ', sortedByAcctNum);
+	console.log('filtered by Alice; sorted by balance ascending: ', filteredByAliceSortedByBalance);
+	
+</script>
+</body>
+
+</html>
